@@ -25,7 +25,7 @@ namespace AviorAzureFunctions
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
 
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+            var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             var data = JsonConvert.DeserializeObject<MakePlansBookingConfirmed>(requestBody);
             
             // Prepare Payload
@@ -39,13 +39,9 @@ namespace AviorAzureFunctions
 
             try
             {
-	            // Get from appsettings
 	            var userId = Environment.GetEnvironmentVariable("AviorUsername");
 	            var password = Environment.GetEnvironmentVariable("AviorPassword");
 
-	            log.LogInformation($"UserId: {userId}");
-	            log.LogInformation($"Password: {password}");
-                
                 var stringContent = new StringContent(payload);
 	            
                 log.LogInformation("Adding User to Avior");
